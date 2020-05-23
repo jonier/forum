@@ -19,6 +19,10 @@ class ForumsController extends Controller
     }
 
     public function store() {
+        $this->validate(request(), [
+            'name' => 'required|max:100|unique:forums',
+            'description' => 'required|max:200'
+        ]);
         Forum::create(request()->all());
         return back()->with('message', ['success', __("Forum created successfully")]);
     }
