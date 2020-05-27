@@ -12,6 +12,8 @@
 */
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -26,3 +28,20 @@ Route::post('/forums', 'ForumsController@store');
 
 Route::get('/posts/{post}', 'PostsController@show');
 Route::post('/posts', 'PostsController@store');
+Route::delete('/posts/{post}', 'PostsController@destroy');
+
+Route::post('/replies', 'RepliesController@store');
+Route::delete('/replies/{reply}', 'RepliesController@destroy')->name('replies.delete');
+
+/*
+ * This route help us to display the images on the webside.
+ * 
+ */
+Route::get('/images/{path}/{attachment}', function($path, $attachment) {
+	$storagePath = Storage::disk($path)->getDriver()->getAdapter()->getPathPrefix();
+	$imageFilePath = $storagePath . $attachment;
+
+	if(File::exists($imageFilePath)) {
+		return Image::make($imageFilePath)->response();
+	}
+});

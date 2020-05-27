@@ -20,6 +20,7 @@ class CreateRepliesTable extends Migration
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->text('reply');
+            $table->string('attachment');
             $table->timestamps();
         });
     }

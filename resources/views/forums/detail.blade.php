@@ -16,7 +16,7 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading panel-heading-post">
-                    <a href="/posts/{{ $post->id }}">{{ $post->title }}</a>
+                    <a href="/posts/{{ $post->slug }}">{{ $post->title }}</a>
                     <scan class="pull-right">
                         {{ __('Owner') }}: {{ $post->owner->name }}
                     </scan>
@@ -24,7 +24,22 @@
 
                 <div class="panel-body">
                     {{ $post->description }}
+
+                    @if ($post->attachment)
+                        <img src="{{ $post->pathAttachment() }}" alt="" class="img-responsive img-rounded">
+                    @endif
                 </div>
+                @if ($post->isOwner())
+                <div class="panel -foot">
+                    <form action="/posts/{{ $post->slug }}" method="POST">
+                        {{ method_field('DELETE') }}
+                        {{ csrf_field() }}
+                        <button type="submit" name="deletePost" class="btn btn-danger ml-1">
+                            {{ __("Delete post") }}
+                        </button>
+                    </form>
+                </div>
+                @endif
             </div>        
 
         @empty
@@ -41,6 +56,9 @@
             <h3 class="text-muted">{{ __("Add a new post to the forum :name", ['name' => $forum->name]) }}</h3>
             @include('partials.errors')
 
+            {{-- 
+                    enctype="multipart/form-data" this instruction is very important to upload files toward the data base.
+            --}}            
             <form method="POST" action="/posts" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <input type="hidden" name="forum_id" value="{{ $forum->id }}"/>
@@ -56,6 +74,11 @@
                               name="description">{{ old('description') }}
                     </textarea>
                 </div>
+
+                <label class="btn btn-warning" for="file">
+                    <input id="file" name="file" type="file" style="display:none;">
+                    {{ __("Upload file") }}
+                </label>
 
                 <button type="submit" name="addPost" class="btn btn-default">{{ __("Add post") }}</button>
             </form>

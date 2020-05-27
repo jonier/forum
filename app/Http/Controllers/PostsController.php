@@ -14,7 +14,20 @@ class PostsController extends Controller
     }
 
     public function store(PostRequest $post_request) {
+
+		if($post_request->hasFile('file') && $post_request->file('file')->isValid()) {
+			$filename = uploadFile('file', 'posts');
+			$post_request->merge(['attachment' => $filename]);
+		}
+        
+        //dd($post_request->input());
+
         Post::create($post_request->input());
-        return back()->with('message', ['success', __("Post created sussesfull")]);
+        return back()->with('message', ['success', __("Post created sussesfully")]);
+    }
+
+    public function destroy(Post $post) {
+        $post->delete();
+        return back()->with('message', ['success', __("Post and replies delete sussesfully")]);
     }
 }

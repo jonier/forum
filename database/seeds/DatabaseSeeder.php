@@ -15,10 +15,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
-        factory(User::class, 50)->create();
-        factory(Forum::class, 20)->create();
-        factory(Post::class, 50)->create();
-        factory(Reply::class, 100)->create();
+        factory(User::class)->create(['email' => 'jonierm@gmail.com', 'name' => 'Jonier Murillo Hurtado']);
+        factory(User::class, 50)->create(); //50
+        factory(Forum::class, 20)->create(); //20
+        factory(Post::class, 50)->create(); //50
+        factory(Reply::class, 100)->create(); //100
     }
 }

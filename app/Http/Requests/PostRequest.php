@@ -24,9 +24,10 @@ class PostRequest extends FormRequest
     public function rules()
     {
         return [
-            'forum_id' => 'required|exists:forums, id',
+            'forum_id' => 'required|exists:forums,id',
             'title' => 'required|unique:posts|max:100',
-            'description' => 'required'
+            'description' => 'required',
+	        'file' => 'image'
         ];
     }
 }

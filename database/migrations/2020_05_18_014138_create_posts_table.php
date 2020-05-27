@@ -21,7 +21,10 @@ class CreatePostsTable extends Migration
             $table->unsignedInteger('forum_id');
             $table->foreign('forum_id')->references('id')->on('forums');
             $table->string('title');
+            $table->string('slug');
+            $table->index('slug');
             $table->text('description');
+	        $table->string('attachment')->nullable();
             $table->timestamps();
         });
     }

@@ -17,6 +17,8 @@ class CreateForumsTable extends Migration
             $table->engine = "InnoDB";
             $table->increments('id');
             $table->string('name');
+            $table->string('slug');
+            $table->index('slug');
             $table->text('description');
             $table->timestamps();
         });
