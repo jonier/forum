@@ -1,5 +1,6 @@
 <?php
 
+use App\Category;
 use App\Forum;
 use App\Post;
 use App\Reply;
@@ -20,5 +21,6 @@ class DatabaseSeeder extends Seeder
         factory(Forum::class, 20)->create(); //20
         factory(Post::class, 50)->create(); //50
         factory(Reply::class, 100)->create(); //100
+        factory(Category::class, 20)->create();
     }
 }

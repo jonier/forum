@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Notifications\NewReply;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Storage;
@@ -24,6 +25,7 @@ class Reply extends Model
         static::creating(function($reply) {
             if( ! App::runningInConsole() ) {
                 $reply->user_id = auth()->id();
+                self::notifyPostOwner($reply);
             }
         });
 
@@ -59,5 +61,9 @@ class Reply extends Model
         }else{
             return "/images/replies/" . $this->attachment;
         }
+    }
+
+    public static function notifyPostOwner($reply) {
+        $reply->post->owner->notify(new NewReply($reply));
     }
 }

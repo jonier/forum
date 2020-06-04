@@ -28,7 +28,11 @@ class Post extends Model
                 $post->slug = str_slug($post->title, "-");
             }
         });
-
+        static::created(function($post) {
+            if (! App::runningInConsole()) {
+                $post->categories()->attach(request('categories'));
+            }
+        });
         static::deleting(function($post){
             if( ! App::runningInConsole() ) {
                 if($post->replies()->count()){
@@ -43,6 +47,8 @@ class Post extends Model
                 if($post->attachment) {
                     Storage::delete('posts/' . $post->attachment);
                 }
+
+                $post->categories()->detach();
             }
         });
     }
@@ -70,6 +76,23 @@ class Post extends Model
             return $this->attachment;
         }else{
             return "/images/posts/" . $this->attachment;
+        }
+    }
+
+    public function categories() {
+        return $this->belongsToMany(Category::class);
+    }
+
+    public function showCategories($categories, $label) {
+        $data = [];
+        if(count($categories)){
+            foreach ($categories as $category) {
+                array_push($data, $category->name);
+            }
+        }
+
+        if(!empty($data)) {
+            return sprintf("%s: %s", $label, join(', ', $data));
         }
     }
 }

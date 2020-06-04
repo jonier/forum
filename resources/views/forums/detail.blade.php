@@ -25,6 +25,10 @@
                 <div class="panel-body">
                     {{ $post->description }}
 
+                    <hr />
+
+                    <b>{{ $post->showCategories($post->categories, __("Categories")) }}<br /></b>
+
                     @if ($post->attachment)
                         <img src="{{ $post->pathAttachment() }}" alt="" class="img-responsive img-rounded">
                     @endif
@@ -73,6 +77,17 @@
                     <textarea id="description" class="form-control"
                               name="description">{{ old('description') }}
                     </textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="categories">{{ __("Categories") }}</label>
+                    <select multiple name="categories[]" id="categories" class="form-control" size="11">
+                        <option value="">{{ __("Choose a category") }}</option>
+
+                        @foreach ($categories as $id => $name)
+                        <option value="{{ $id }}">{{ $name }}</option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <label class="btn btn-warning" for="file">

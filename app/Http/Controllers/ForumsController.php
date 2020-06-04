@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Forum;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,9 @@ class ForumsController extends Controller
 
     public function show(Forum $forum){
         $posts = $forum->posts()->with(['owner'])->paginate(5);
-        return view('forums.detail', compact('forum', 'posts'));
+        $categories = Category::pluck('name', 'id');
+
+        return view('forums.detail', compact('forum', 'posts', 'categories'));
     }
 
     public function store() {
