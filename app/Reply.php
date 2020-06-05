@@ -25,7 +25,7 @@ class Reply extends Model
         static::creating(function($reply) {
             if( ! App::runningInConsole() ) {
                 $reply->user_id = auth()->id();
-                self::notifyPostOwner($reply);
+                //self::notifyPostOwner($reply);
             }
         });
 
