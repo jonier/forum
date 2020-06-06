@@ -11,4 +11,8 @@ class PostsController extends Controller
     public function index(Post $post) {
         return PostsResource::collection($post->with('replies')->paginate(2));
     }
+
+    public function show(Post $post) {
+        return new PostsResource($post);
+    }
 }

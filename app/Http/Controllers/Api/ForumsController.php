@@ -13,6 +13,6 @@ class ForumsController extends Controller
     }
 
     public function show(Forum $forum) {
-	    return new ForumsResource($forum->with('posts')->first());
+	    return new ForumsResource($forum);
     }
 }
