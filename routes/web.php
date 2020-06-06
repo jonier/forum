@@ -22,6 +22,8 @@ use Intervention\Image\Facades\Image;
 Route::view('/', 'welcome');
 Auth::routes();
 
+Route::get('/set_language/{lang}', 'AppController@setLanguage')->name('set_language');
+
 Route::get('/', 'ForumsController@index');
 Route::get('/forums/{forum}', 'ForumsController@show');
 Route::post('/forums', 'ForumsController@store');
