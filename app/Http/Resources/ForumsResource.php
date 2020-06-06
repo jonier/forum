@@ -18,8 +18,8 @@ class ForumsResource extends Resource
         return [
 	        "name" => $this->name,
 	        "slug" => $this->slug,
-	        "description" => $this->description,
-	        //"posts" => PostsResource::collection($this->whenLoaded('posts')),
+            "description" => $this->description,
+	        "posts" => PostsResource::collection($this->whenLoaded('posts')),
 	        "created_at" => Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at)->format('d-m-Y')
         ];
     }

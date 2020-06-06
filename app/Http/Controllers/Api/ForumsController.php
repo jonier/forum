@@ -9,7 +9,7 @@ use App\Http\Resources\ForumsResource;
 class ForumsController extends Controller
 {
     public function index(Forum $forum) {
-    	return ForumsResource::collection($forum->paginate(2));
+    	return ForumsResource::collection($forum->with('posts')->paginate(2));
     }
 
     public function show(Forum $forum) {
