@@ -23,10 +23,14 @@ class PostsController extends Controller
         //dd($post_request->input());
 
         Post::create($post_request->input());
-        return back()->with('message', ['success', __("Post created sussesfully")]);
+        return back()->with('message', ['success', __("Post created successfully")]);
     }
 
     public function destroy(Post $post) {
+        if(!$post->isOwner()){
+            abort(401);
+        }
+
         $post->delete();
         return back()->with('message', ['success', __("Post and replies delete sussesfully")]);
     }

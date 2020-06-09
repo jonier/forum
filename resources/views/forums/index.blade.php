@@ -27,7 +27,7 @@
             </div>
         @endforelse
 
-        @if ($forum->count())
+        @if ($forums->count())
             {{ $forums->links() }}
         @endif
 
