@@ -3,7 +3,10 @@
 @section('content')
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
+
         <h1 class="text-center text-muted">{{ __('Forums') }}</h1>
+        @include('partials.forums.search')
+        <hr />
 
         @forelse ($forums as $forum)
 
@@ -11,8 +14,8 @@
                 <div class="panel-heading panel-heading-forum">
                     <a href="/forums/{{ $forum->slug }}">{{ $forum->name }}</a>
                     <scan class="pull-right">
-                        {{ __('Posts') }}: {{ $forum->posts->count() }},
-                        {{ __('Replies') }}: {{ $forum->replies->count() }}
+                        {{ __('Posts') }}: {{ $forum->posts_count }},
+                        {{ __('Replies') }}: {{ $forum->replies_count }}
                     </scan>
                 </div>
 

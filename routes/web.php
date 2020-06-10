@@ -24,9 +24,11 @@ Auth::routes();
 
 Route::get('/set_language/{lang}', 'AppController@setLanguage')->name('set_language');
 
+Route::get('forums/clear_search', 'ForumsController@clearSearch')->name('forums.clear_search');
 Route::get('/', 'ForumsController@index');
 Route::get('/forums/{forum}', 'ForumsController@show');
 Route::post('/forums', 'ForumsController@store');
+Route::post('/forums/search', 'ForumsController@search');
 
 Route::get('/posts/{post}', 'PostsController@show');
 Route::post('/posts', 'PostsController@store');

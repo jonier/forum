@@ -55,4 +55,31 @@ class ForumsTest extends TestCase
             ->assertStatus(302)
             ->assertSessionHas('message', ['success', __("Forum created successfully")]);
     }
+
+    /** @test */
+    public function any_can_search_posts() {
+        $this->withExceptionHandling();
+
+        $search = "post";
+
+        $forum1 = factory(Forum::class)->create(['name' => 'missing']);
+        $forum2 = factory(Forum::class)->create(['name' => $search]);
+
+        $this->post('/forums/search', ['search' => $search]);
+
+        $response = $this->get('/');
+
+        $response->assertSessionHas('search');
+
+        $response->assertSee($forum2->name);
+        $response->assertDontSee($forum1->name);
+
+        $this->post('/forums/search', []);
+
+        $response = $this->get('/');
+
+        $response->assertSessionMissing('search');
+        $response->assertSee($forum1->name);
+
+    }
 }
